@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>GUIBAF, te guía</title>
+  <style>
+    /* ==== ESTILOS GLOBALES ==== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* ==== NAV ==== */
+  nav {
+      background: #2c3e50;
+      display: flex;
+      justify-content: center;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: all 0.3s ease-in-out;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    /* Efecto línea inferior */
+    nav ul li a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0%;
+      height: 3px;
+      background: #e67e22;
+      transition: width 0.3s ease-in-out;
+    }
+
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    /* Efecto escala */
+    nav ul li a:hover {
+      color: #f1c40f;
+      transform: scale(1.1);
+    }
+
+
+    /* ==== HEADER ==== */
+    header {
+      height: 100vh;
+      background: url("img/banner.jpg") no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      color: white;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .contenido-header {
+      position: relative;
+      z-index: 2;
+    }
+
+    .contenido-header h1 {
+      font-size: 3.5em;
+    }
+
+    .contenido-header p {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    .contenido-header a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #ffd700;
+      color: #333;
+      font-weight: bold;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .contenido-header a:hover {
+      background: #e6c200;
+    }
+
+    /* ==== SECCIONES ==== */
+    section {
+      padding: 70px 20px;
+      text-align: center;
+    }
+
+    section h2 {
+      font-size: 2.3em;
+      color: #008080;
+      margin-bottom: 30px;
+    }
+
+    .contenedor {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 15px;
+      font-size: 1.3em;
+    }
+
+    .card p {
+      margin: 0 15px 15px;
+      color: #555;
+    }
+    .rutas {
+      padding: 20px 20px 20px 20px;
+    }
+    .rutas a {
+      display: inline-block;
+      margin: 0px;
+      padding: 8px 8px;
+      background: #28a745;
+      color: white;
+      text-decoration: none;
+      border-radius: 24px;
+    }
+    .contenedor {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 10px;
+    }
+
+    .tarjeta {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+      margin: 50px 0;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      align-self: flex-start;
+    }
+
+    .tarjeta:hover {
+      transform: translateY(-5px);
+    }
+
+    .tarjeta img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+  
+    .contenido {
+      padding: 15px;
+    }
+
+    .contenido h3 {
+      margin: 0;
+    }
+
+    .boton {
+      background: #0077b6;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .boton:hover {
+      background: #023e8a;
+    }
+
+    /* Caja desplegable */
+
+    .info-extra {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.3s ease;
+      background: #f0f8ff;
+      padding: 0 15px;
+      border-top: 1px solid #ddd;
+    }
+
+    .info-extra.activo {
+      max-height: 300px;
+      padding: 15px;
+    }
+
+    /* ==== FOOTER ==== */
+  footer {
+  background: linear-gradient(135deg, #004e92, #000428);
+  color: white;
+  padding: 40px 20px;
+  margin-top: 50px;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-logo h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  animation: glow 2s infinite alternate;
+}
+
+.footer-logo p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.footer-links h3,
+.footer-social h3 {
+  margin-bottom: 15px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin: 8px 0;
+}
+
+.footer-links ul li a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links ul li a:hover {
+  color: #ffcc00;
+}
+
+.footer-social .social-icons a {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 20px;
+  color: white;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.footer-social .social-icons a:hover {
+  transform: scale(1.2);
+  color: #ffcc00;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 15px;
+}
+
+/* Animación de brillo para el logo */
+@keyframes glow {
+  from { text-shadow: 0 0 10px #fff, 0 0 20px #00c3ff; }
+  to { text-shadow: 0 0 20px #ffcc00, 0 0 30px #ff5733; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#turismo">Lugares Turísticos</a></li>
+      <li><a href="#restaurantes">Restaurantes</a></li>
+      <li><a href="#hoteles">Hoteles</a></li>
+      <li><a href="#transporte">Transporte</a></li>
+      <li><a href="#rutas">Rutas</a></li>
+    </ul>
+  </nav>
+
+  <!-- HEADER -->
+  <header>
+    <section id="inicio">
+    <div class="contenido-header">
+      <h1>GUIBAF, te guía</h1>
+      <p>Explora lo mejor de Cajabamba: turismo, gastronomía y más</p>
+      <a href="#turismo">Explorar ahora</a>
+    </div>
+  </section>
+  </header>
+
+  <!-- LUGARES TURÍSTICOS -->
+  <section id="turismo">
+    <h2>🌄 Lugares Turísticos</h2>
+    <div class="contenedor">
+      <!-- Tarjeta sitio turístico -->
+      <div class="tarjeta">
+        <img src="img/cascadas.jpg" alt="Laguna de Cushuro">
+        <div class="contenido">
+          <h3>Cascadas de Cochecorral</h3>
+          <p>Unas cascadas de ensueño rodeadas de naturaleza.</p>
+          <button class="boton" onclick="toggleInfo(this)">Ver más</button>
+          <div class="info-extra">
+            <p>Este atractivo natural se encuentra a una altitud de 2654 m.s.n.m. Destaca de otras cascadas por la presencia de múltiples peldaños naturales de roca, por los cuales cae el agua formando un escenario natural único.</p>
+            <section id="rutas" class="rutas">
+              <a href="https://maps.app.goo.gl/66mNfVaHQHaE79G56" target="_blank">Como llegar 👉</a>
+            </section>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Otro sitio turístico -->
+      <div class="tarjeta">
+        <img src="img/OJOS LANLA.jpg" alt="Bosques de Pinares">
+        <div class="contenido">
+          <h3>Ojos de Lanla</h3>
+          <p>Un lugar ideal para caminatas y contacto con la naturaleza.</p>
+          <button class="boton" onclick="toggleInfo(this)">Ver más</button>
+          <div class="info-extra">
+            <p>Es un manantial de agua cristalina, posiblemente formados por filtraciones subterráneas de la laguna de Quengococha y que luego de aflorar van a desembocar al río Lanla.</p>
+            <section id="rutas" class="rutas">
+              <a href="https://maps.app.goo.gl/cZ4JH3mSG13NH4ub9" target="_blank">Como llegar 👉</a>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="tarjeta">
+        <img src="img/olvido2.jpg" alt="Bosques de Pinares">
+        <div class="contenido">
+          <h3> Peña del Olvido</h3>
+          <p>Un acantilado y mirador natural.</p>
+          <button class="boton" onclick="toggleInfo(this)">Ver más</button>
+          <div class="info-extra">
+            <p>Su nombre proviene de una anécdota sobre una mujer que olvidó ponerse una prenda íntima antes de intentar lanzarse, lo que la hizo desistir. Ofrece vistas al valle de Condebamba y al nacimiento de agua .</p>
+            <section id="rutas" class="rutas">
+              <a href="https://maps.app.goo.gl/Ce3gPWygPUbmJZEt5" target="_blank">Como llegar 👉</a>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contenedor">
+      <!-- Tarjeta sitio turístico -->
+      <div class="tarjeta">
+        <img src="img/ponte.jpg" alt="LAGUNA PONTE">
+        <div class="contenido">
+          <h3>Laguna de Ponte</h3>
+          <p>Una laguna mágica cerca a la ciudad.</p>
+          <button class="boton" onclick="toggleInfo(this)">Ver más</button>
+          <div class="info-extra">
+            <p>Es un lugar de visita frecuente para los lugareños, donde se pueden observar totora, flora y fauna, además de practicar pesca y senderismo </p>
+            <section id="rutas" class="rutas">
+              <a href="https://maps.app.goo.gl/DUXxUswHni1xhS7n7" target="_blank">Como llegar 👉</a>
+            </section>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Otro sitio turístico -->
+      <div class="tarjeta">
+        <img src="img/quengococha.jpg" alt="LAGUNA QUENGO">
+        <div class="contenido">
+          <h3>Laguna Quengococha</h3>
+          <p>Es una de las lagunas más representativas de la provincia.</p>
+          <button class="boton" onclick="toggleInfo(this)">Ver más</button>
+          <div class="info-extra">
+            <p>Se sitúa al sureste de Cajabamba en la Cordillera Occidental. Es fuente de agua para riego y suministra agua a la ciudad mediante un canal construido en 1965</p>
+            <section id="rutas" class="rutas">
+              <a href="https://maps.app.goo.gl/Atp3EQii9GF6uYuq8" target="_blank">Como llegar 👉</a>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="tarjeta">
+        <img src="img/CHIVATO.jpg" alt="POZAS CHIVATO">
+        <div class="contenido">
+          <h3>Pozas de Chivato Huayco</h3>
+          <p>Descubre las 7 pozas sucesivas de Chivato Huayco</p>
+          <button class="boton" onclick="toggleInfo(this)">Ver más</button>
+          <div class="info-extra">
+            <p>Rodeadas de montañas y vegetación exuberante. El río Lulichuco crea pequeñas cascadas en un paisaje natural impresionante, ideal para disfrutar de la naturaleza y la tranquilidad. Un destino perfecto para aquellos que buscan aventura y belleza natural..</p>
+            <section id="rutas" class="rutas">
+              <a href="https://maps.app.goo.gl/VYuketqf5ZcFidMu8" target="_blank">Como llegar 👉</a>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <script>
+      function toggleInfo(boton) {
+        // Cerrar todas las demás
+        document.querySelectorAll(".info-extra").forEach(info => {
+          if (info !== boton.nextElementSibling) {
+            info.classList.remove("activo");
+            // Resetear texto de los botones
+            info.previousElementSibling.textContent = "Ver más";
+          }
+        });
+    
+        // Alternar solo la tarjeta clickeada
+        const info = boton.nextElementSibling;
+        info.classList.toggle("activo");
+    
+        // Cambiar texto del botón según estado
+        boton.textContent = info.classList.contains("activo") ? "Ver menos" : "Ver más";
+      }
+    </script>
+  </section>
+
+  <!-- RESTAURANTES -->
+  <section id="restaurantes">
+    <h2>🍽️ Restaurantes</h2>
+    <div class="contenedor">
+      <div class="card">
+        <img src="img/bravos.jpg" alt="Restaurante1">
+        <h3>Bravo's</h3>
+        <p>Un lugar acojedor con comida de todo un poco</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/mnX3oCnCnp7DzCsk8?g_st=ac" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+      <div class="card">
+        <img src="img/zarco.jpg" alt="Pollería">
+        <h3>El zarco Gourmet</h3>
+        <p>Comida tradicional y variada.</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/BEBgShyNDEhBbYEr6?g_st=ac" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+      <div class="card">
+        <img src="img/gloriabamba.jpg" alt="Cevichería">
+        <h3>Gloriabamba</h3>
+        <p>Comida típica cajabambina con un toque moderno</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/R1EikrmMZwFhkHDd7?g_st=ac" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+      <div class="card">
+        <img src="img/michane.jpg" alt="Cevichería">
+        <h3>Mi chane</h3>
+        <p>Lo mejor de la comida serrana.</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/oZNANRGph3oDTi5t5?g_st=ac" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+      <div class="card">
+        <img src="img/sabor caja.jpg" alt="Cevichería">
+        <h3>Sabor Cajabambino</h3>
+        <p>Un restaurante con historia en cajabamba.</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/afx41PTRyaQU8z2o7?g_st=ac" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+      <div class="card">
+        <img src="img/daniel.jpg" alt="Cevichería">
+        <h3>Restaurante Daniel's</h3>
+        <p>Excelente para salir de la rutina.</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/xNadL9V7xiykxm2XA?g_st=ac " target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOTELES -->
+  <section id="hoteles">
+    <h2>🏨 Hoteles</h2>
+    <div class="contenedor">
+      <div class="card">
+        <img src="img/casa blanca.jpg" alt="Hotel 1">
+        <h3>Hotel casa blanca</h3>
+        <p>Confort y tradición en el centro de la ciudad.</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/fma174FY4KVghKHC8" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+      <div class="card">
+        <img src="img/hotel roagui.jpg" alt="Hospedaje 2">
+        <h3>Hotel Roagui</h3>
+        <p>Una vista privilegiada de Cajabamba con ambiente familiar.</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/gme7pnugd2Hrp5sG8?g_st=ac" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+      <div class="card">
+        <img src="img/abriljc.jpg" alt="Hotel 3">
+        <h3>Hotel Abril JC</h3>
+        <p>Hospedaje calidad - precio.</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/B7qD1MCNtv41yz346?g_st=ac" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPORTE -->
+  <section id="transporte">
+    <h2>🚌 Transporte</h2>
+    <div class="contenedor">
+      <div class="card">
+        <img src="img/ecotur.jpg" alt="Empresa 1">
+        <h3>Ecotur</h3>
+        <p>Viajes seguros hacia Huamachuco, Trujillo y Lima.</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/anj6jSeHZgxDskCB9?g_st=ac" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+      <div class="card">
+        <img src="img/esperanza.jpg" alt="Empresa 2">
+        <h3>Mi esperanza</h3>
+        <p>Minivans confortables con salidas cada hora.</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/jM57q8e8aMbyj5ox8?g_st=ac" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+      <div class="card">
+        <img src="img/gloriaamba.jpg" alt="Empresa 3">
+        <h3>Gloriabamba</h3>
+        <p>Traslados personalizados a todos los destinos turísticos.</p>
+        <section id="rutas" class="rutas">
+          <a href="https://maps.app.goo.gl/qXxU8eukyu9br4Yh9?g_st=ac" target="_blank">Como llegar 👉</a>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+  <div class="footer-container">
+    <div class="footer-logo">
+      <h2>🌎 GUIBAF, te guía</h2>
+      <p>Descubre Cajabamba como nunca antes.</p>
+    </div>
+
+    
+
+    <div class="footer-social">
+      <h3>Síguenos</h3>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/guibaf_teguia2025?igsh=NzhhZG1sank4dnAx"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 GUIBAF, te guía | Todos los derechos reservados.</p>
+  </div>
+</footer>
+</body>
+</html>
