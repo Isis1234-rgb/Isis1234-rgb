@@ -246,7 +246,7 @@ nav ul li a {
       transition: transform 0.3s ease;
       align-self: flex-start;
     }
-
+    
     .tarjeta:hover {
       transform: translateY(-5px);
     }
@@ -255,6 +255,21 @@ nav ul li a {
       width: 100%;
       height: 250px;
       object-fit: cover;
+    }
+    .tarjeta img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+    img[src*="img/productos1.jpg"] {
+      width: 250px;
+      height: 250px;
+      object-fit: contain;
+    }
+    img[src*="img/productos2.jpg"] {
+      width: 250px;
+      height: 250px;
+      object-fit: contain;
     }
   
     .contenido {
@@ -295,7 +310,7 @@ nav ul li a {
       max-height: 300px;
       padding: 15px;
     }
-
+  
     /* ==== FOOTER ==== */
   footer {
   background: linear-gradient(135deg, #004e92, #000428);
@@ -370,7 +385,54 @@ nav ul li a {
   padding-top: 15px;
 }
 
+#video {
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f0f4f8, #e0e8ef);
+  border-radius: 15px;
+  margin: 40px ;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 450px;
+  height: 50px;
+  object-fit: contain;
+}
 
+#video h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Video centrado y adaptable */
+#video video {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+#video video:hover {
+  transform: scale(1.02);
+}
+
+/* 📱 Versión responsive para celulares */
+@media (max-width: 768px) {
+  #video {
+    padding: 20px 10px;
+  }
+
+  #video h2 {
+    font-size: 1.4rem;
+  }
+
+  #video video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+}
 /* Animación de brillo para el logo */
 @keyframes glow {
   from { text-shadow: 0 0 10px #fff, 0 0 20px #00c3ff; }
@@ -683,6 +745,81 @@ nav ul li a {
       </div>
     </div>
   </section>
+  <!-- PRODUCTOS CAJABAMBINOS -->
+  <section id="turismo">
+    <h2>Productos Cajabambinos</h2>
+    <div class="contenedor">
+      <!-- Tarjeta sitio turístico -->
+      <div class="tarjeta">
+        <img src="img/productos1.jpg" alt="Laguna de Cushuro">
+        <div class="contenido">
+          <h3>Kusi Kawsay</h3>
+          <p></p>
+          <button class="boton" onclick="toggleInfo(this)">Ver más</button>
+          <div class="info-extra">
+            <p>Harina de poroto hecha con recursos 100% Cajabambinos.</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Otro sitio turístico -->
+      <div class="tarjeta">
+        <img src="img/productos2.jpg" alt="Bosques de Pinares">
+        <div class="contenido">
+          <h3>Sigue nuestra página</h3>
+          <p></p>
+          <button class="boton" onclick="toggleInfo(this)">Ver más</button>
+          <div class="info-extra">
+            <p>Escanea el QR o ve directamente con el botón de abajo👇.</p>
+            <section id="rutas" class="rutas">
+              <a href="https://www.instagram.com/kusi_kaw.say?igsh=MWZ0OGppMXhjMHBraQ==" target="_blank">Instagram</a>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="tarjeta">
+        <img src="img/productos3.jpg" alt="Bosques de Pinares">
+        <div class="contenido">
+          <h3> Equipo de Kusi Kawsay</h3>
+          <p></p>
+          <button class="boton" onclick="toggleInfo(this)">Ver más</button>
+          <div class="info-extra">
+            <p>Conformado por estudiantes de la I.E. Nuestra Señora del Rosario.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contenedor">
+      <!-- Tarjeta sitio turístico -->
+      <div class="tarjetav">
+          <h2>Conoce mas de Kusi Kawsay</h2>
+          <video controls autoplay muted loop width="50%" height="70%">
+            <source src="img/productos4.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+          </video>
+      </div>
+    </div>
+  
+    <script>
+      function toggleInfo(boton) {
+        // Cerrar todas las demás
+        document.querySelectorAll(".info-extra").forEach(info => {
+          if (info !== boton.nextElementSibling) {
+            info.classList.remove("activo");
+            // Resetear texto de los botones
+            info.previousElementSibling.textContent = "Ver más";
+          }
+        });
+    
+        // Alternar solo la tarjeta clickeada
+        const info = boton.nextElementSibling;
+        info.classList.toggle("activo");
+    
+        // Cambiar texto del botón según estado
+        boton.textContent = info.classList.contains("activo") ? "Ver menos" : "Ver más";
+      }
+    </script>
+  </section>
 
   <!-- FOOTER -->
   <footer>
@@ -711,5 +848,7 @@ nav ul li a {
 </footer>
 </body>
 </html>
+
+
 
 
